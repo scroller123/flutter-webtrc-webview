@@ -1,0 +1,1 @@
+~/flutter/bin/flutter pub get
