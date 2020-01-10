@@ -167,69 +167,71 @@ class _InAppWebViewPageState extends State<InAppWebViewPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          left: offset.dx,
-          top: offset.dy,
-          child: GestureDetector(
-            onPanUpdate: (details) {
-              setState(() {
-                offset = Offset(offset.dx + details.delta.dx, offset.dy + details.delta.dy);
-              });
-            },
-            child: Container(
-                width: 200,
-                height: 200,
-                child: Column(children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      constraints: BoxConstraints(
-                        maxHeight: 200,
-                      ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(600)),
-                          color: Color(0xffffffff)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(600)),
-                        child: InAppWebView(
-                          initialUrl: "https://appr.tc/r/158489246",
-//                      initialUrl: "https://proxy.art54.ru:8080",
-                          initialHeaders: {},
-                          initialOptions: InAppWebViewWidgetOptions(
-                            crossPlatform: InAppWebViewOptions(
-                              mediaPlaybackRequiresUserGesture: false,
-                              debuggingEnabled: true,
-                              javaScriptEnabled: true,
-                              javaScriptCanOpenWindowsAutomatically: true,
-                            ),
-                          ),
-                          onWebViewCreated: (InAppWebViewController controller) {
-                            webView = controller;
-
-                          },
-                          onLoadStart: (InAppWebViewController controller, String url) {
-
-                          },
-                          onLoadStop: (InAppWebViewController controller, String url) {
-
-                          },
-                          androidOnPermissionRequest: (InAppWebViewController controller, String origin, List<String> resources) async {
-                            print(origin);
-                            print(resources);
-                            return PermissionRequestResponse(resources: resources, action: PermissionRequestResponseAction.GRANT);
-                          },
+    return Container(
+      color: Colors.deepPurple,
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            left: offset.dx,
+            top: offset.dy,
+            child: GestureDetector(
+              onPanUpdate: (details) {
+                setState(() {
+                  offset = Offset(offset.dx + details.delta.dx, offset.dy + details.delta.dy);
+                });
+              },
+              child: Container(
+                  width: 200,
+                  height: 200,
+                  child: Column(children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        constraints: BoxConstraints(
+                          maxHeight: 200,
                         ),
-                      ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(600)),
+                            color: Color(0xffffffff)),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(600)),
+                          child: InAppWebView(
+                            initialUrl: "https://appr.tc/r/158489246",
+//                      initialUrl: "https://proxy.art54.ru:8080",
+                            initialHeaders: {},
+                            initialOptions: InAppWebViewWidgetOptions(
+                              crossPlatform: InAppWebViewOptions(
+                                mediaPlaybackRequiresUserGesture: false,
+                                debuggingEnabled: true,
+                                javaScriptEnabled: true,
+                                userAgent: 'Chrome',
+                                javaScriptCanOpenWindowsAutomatically: true,
+                              ),
+                            ),
+                            onWebViewCreated: (InAppWebViewController controller) {
+                              webView = controller;
 
+                            },
+                            onLoadStart: (InAppWebViewController controller, String url) {
+
+                            },
+                            onLoadStop: (InAppWebViewController controller, String url) {
+
+                            },
+                            androidOnPermissionRequest: (InAppWebViewController controller, String origin, List<String> resources) async {
+                              print(origin);
+                              print(resources);
+                              return PermissionRequestResponse(resources: resources, action: PermissionRequestResponseAction.GRANT);
+                            },
+                          ),
+                        ),
+
+                      ),
                     ),
-                  ),
-                ])),
+                  ])),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
