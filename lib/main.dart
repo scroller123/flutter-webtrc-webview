@@ -160,6 +160,7 @@ class InAppWebViewPage extends StatefulWidget {
 
 class _InAppWebViewPageState extends State<InAppWebViewPage> {
   InAppWebViewController webView;
+  Offset offset = Offset.zero;
 
   StatelessWidget containe = Container(
       width: 200,
@@ -212,16 +213,23 @@ class _InAppWebViewPageState extends State<InAppWebViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            title: Text("InAppWebView")
-        ),
-        body: Draggable(
-          child: containe,
-          feedback: containe,
-          childWhenDragging:  containe,
-        ),
 
+
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          left: offset.dx,
+          top: offset.dy,
+          child: GestureDetector(
+            onPanUpdate: (details) {
+              setState(() {
+                offset = Offset(offset.dx + details.delta.dx, offset.dy + details.delta.dy);
+              });
+            },
+            child: containe,
+          ),
+        ),
+      ],
     );
   }
 }
